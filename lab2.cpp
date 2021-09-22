@@ -17,9 +17,14 @@ struct count
 int main()
 {
 	vector<string> codeword;
-	int n = 0,n1=0,n2 = 0, n3 = 0;
+	vector<string> ifelse1;
+	vector<string> shortcode;
+	int n = 0,n1=0;
 	int a,b,c;
 	int d=0,e=0,f=0;
+	int x,y,z; 
+	int nif = 0;
+	int num1 = 0;
 	string string1,str,s;
 	
 	struct count arr[63] = 
@@ -114,34 +119,96 @@ int main()
 		a = 0;
 		b = 0;
 		c = 0;
+		x = 0;
+		y = 0;
+		z = 0;
 		if(str.length() > 1)
 		{
-
+			
 			for(int j = 0;j<str.length();j++)
 			{
-
-				if(!(str[j]>='a'&&str[j]<='z'))
+				/*quotation mark*/
+				if (str[j]=='\"'||str[j]=='\'')
 				{
-					if(c == 1)
-					{
-						
-						b = j;
-						s = str.substr(a,b-a);
-						codeword.push_back(s);
-
-						c = 0;
-					
-					}
-					
+					x += 1;
 				}
-				else
+				/*annotation*/
+				if ((str[j]=='\/'&&str[j+1]=='\*')||(str[j]=='\*'&&str[j+1]=='\/'))
 				{
-					if(c == 0)
+					y += 1;
+				}
+				if(str[j]=='\/'&&str[j+1]=='\/')
+				{
+					z = 1; 
+				} 
+				
+				if ( x%2 != 1&&y%2!=1&&z !=1)
+				{
+				
+					/*Extract words*/
+					if(!(str[j]>='a'&&str[j]<='z'))
 					{
-						a = j;
-						c = 1;
+						if(c == 1)
+						{
+						
+							b = j;
+							s = str.substr(a,b-a);
+							codeword.push_back(s);
+	
+							c = 0;
+					
+						}
 						
 					}
+					else
+					{
+						if(c == 0)
+						{
+							a = j;
+							c = 1;
+						
+						}
+					}
+			 
+					
+					if(str[j]=='i'&&str[j+1]=='f')
+					{
+						
+						ifelse1.push_back("if");
+						shortcode.push_back("if");
+						nif += 1;
+						num1 +=2;
+						cout<<"if"<<endl;
+					}
+					
+					if( (nif > 0)|| (num1 > 0))
+					{
+						if(str[j]=='{')
+						{
+							shortcode.push_back("{");
+							num1 -=1;
+							cout<<"{"<<endl;
+						}
+						if(str[j]=='}')
+						{
+							shortcode.push_back("}");
+							num1 -=1;
+							cout<<"}"<<endl;
+						}
+						if(str[j]=='e'&&str[j+1]=='l'&&str[j+2]=='s'&&str[j+3]=='e')
+						{
+							ifelse1.push_back("else");
+							shortcode.push_back("else");
+							nif -= 1;
+							num1 +=2;
+							if(str[j+5]=='i'&&str[j+6]=='f')
+							{
+								num1 -=2;
+							}
+							cout<<"else"<<endl;
+						}
+					}
+					
 				}
 			}
     	}
@@ -180,21 +247,26 @@ int main()
 	
 	}
 	
-	
-	for (int p = 0;p<codeword.size();p++)
-	{
-		if(codeword[p]=="if"&&codeword[p+1]=="else"&&codeword[p+2]!="if")
-		{
-			arr1[0].count += 1;
-		}
-	}
 	cout<<"total num:"<<n1<<endl;
 	
 	cout<<"switch num:"<<arr[58].count<<endl;
 	
 	cout<<"case num:"<<e<<" "<<f<<endl;
 	
+	for (int p = 0;p<ifelse1.size()-2;p++)
+	{
+		if(ifelse1[p]=="if"&&ifelse1[p+1]=="else"&&ifelse1[p+2]!="if")
+		{
+			
+			arr1[0].count += 1;
+		}
+	}
+	
+
+	
 	cout<<"if else:"<<arr1[0].count<<endl;
+	
+	
 
 
 	
