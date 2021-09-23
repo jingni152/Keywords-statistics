@@ -12,7 +12,11 @@ struct count
 	char* name;
 	int count;
 };
-
+struct switchcase
+{
+	int scount;
+	int ccount;
+};
 
 int main()
 {
@@ -21,7 +25,7 @@ int main()
 	vector<string> shortcode;
 	int n = 0,n1=0;
 	int a,b,c;
-	int d=0,e=0,f=0;
+	int d=0;
 	int x,y,z; 
 	int nif = 0;
 	int num1 = 0;
@@ -95,7 +99,29 @@ int main()
 		
 	};
 	
-
+	struct switchcase sc[20] =
+	{
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+		0,0,
+	};
 	struct count arr1[1] =
 	{
 		"if else",0,
@@ -226,25 +252,25 @@ int main()
 				n1 += 1;
 			}
     	}
-		if(codeword[k]=="switch"||codeword[k]=="default")
+    }
+    
+    
+    
+    for(int i=0;i<codeword.size();i++)
+    {
+		if(codeword[i]=="switch")
 		{
 			d += 1;
 		}
-		if(d ==1)
+		if(d !=0)
 		{
-			if(codeword[k]=="case")
+			if(codeword[i]=="case")
 			{
-				e += 1;
+				sc[d-1].scount =d;
+				sc[d-1].ccount += 1;
 			}
 		}
-		if(d ==3)
-		{
-			if(codeword[k]=="case")
-			{
-				f += 1;
-			}
-		}
-		
+	
 	
 	}
 	
@@ -252,8 +278,12 @@ int main()
 	
 	cout<<"switch num:"<<arr[58].count<<endl;
 	
-	cout<<"case num:"<<e<<" "<<f<<endl;
-	
+	cout<<"case num:";
+	for(int r =0;r<d;r++)
+	{
+		cout<<sc[r].ccount<<" ";
+	}
+	cout<<" "<<endl;
 	for (int p = 0;p<ifelse1.size()-2;p++)
 	{
 		if(ifelse1[p]=="if"&&ifelse1[p+1]=="else"&&ifelse1[p+2]!="if")
