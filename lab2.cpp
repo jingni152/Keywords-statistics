@@ -102,6 +102,11 @@ int main()
 		
 	}; 
 	
+	struct count arr2[1] = 
+	{
+		"if else-if else",0, 
+	};
+	
 	cout<<"enter the file:"<<endl;
 	cin>>string1;
 	
@@ -178,7 +183,6 @@ int main()
 						shortcode.push_back("if");
 						nif += 1;
 						num1 +=2;
-						cout<<"if"<<endl;
 					}
 					
 					if( (nif > 0)|| (num1 > 0))
@@ -187,13 +191,11 @@ int main()
 						{
 							shortcode.push_back("{");
 							num1 -=1;
-							cout<<"{"<<endl;
 						}
 						if(str[j]=='}')
 						{
 							shortcode.push_back("}");
 							num1 -=1;
-							cout<<"}"<<endl;
 						}
 						if(str[j]=='e'&&str[j+1]=='l'&&str[j+2]=='s'&&str[j+3]=='e')
 						{
@@ -205,7 +207,6 @@ int main()
 							{
 								num1 -=2;
 							}
-							cout<<"else"<<endl;
 						}
 					}
 					
@@ -273,6 +274,28 @@ int main()
 	
 	
 	infile.close();
+	
+	for(int v = 0;v<shortcode.size()-3;v++)
+	{
+		if (shortcode[v]=="else"&&shortcode[v+1]=="if"&&shortcode[v+2]=="{")
+		{
+			arr2[0].count += 1;
+		}
+		if(v>3)
+		{
+			if(shortcode[v]=="else"&&shortcode[v+1]=="if"&&shortcode[v+2]=="{"&&shortcode[v+3]=="}")
+			{
+				if(shortcode[v-4]=="else"&&shortcode[v-3]=="if"&&shortcode[v-2]=="{"&&shortcode[v-1]=="}")
+				{
+					arr2[0].count -=1;
+				}
+			}
+		}
+		
+	} 
+	
+	cout<<arr2[0].name<<":"<<arr2[0].count<<endl;
+	
 	
 	
 	
